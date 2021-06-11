@@ -22,11 +22,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestEmail()
-            .build()
-
-        siginClient = GoogleSignIn.getClient(this, gso)
+        configGoogleSigin()
 
         configButton()
 
@@ -35,6 +31,14 @@ class MainActivity : AppCompatActivity() {
         account?.let {
             callProfile()
         }
+    }
+
+    private fun configGoogleSigin() {
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestEmail()
+            .build()
+
+        siginClient = GoogleSignIn.getClient(this, gso)
     }
 
     private fun configButton() {
