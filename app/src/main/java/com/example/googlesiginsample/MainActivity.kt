@@ -3,22 +3,19 @@ package com.example.googlesiginsample
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
 import androidx.appcompat.app.AppCompatActivity
 import com.example.googlesiginsample.databinding.ActivityMainBinding
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.SignInButton
-import com.google.android.gms.common.api.ApiException
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var siginClient: GoogleSignInClient
     private lateinit var binding: ActivityMainBinding
-
-    companion object {
-        private const val RC_SIGN_IN: Int = 10
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,46 +41,18 @@ class MainActivity : AppCompatActivity() {
         binding.btAutenticar.apply {
             setSize(SignInButton.SIZE_WIDE)
             setOnClickListener {
-                autenticar()
+                siginResultConnect.launch(siginClient.signInIntent)
             }
         }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
+    private fun callProfile() = startActivity(Intent(this, UserProfileActivity::class.java))
 
-        if (resultCode == Activity.RESULT_OK) {
+    private val siginResultConnect: ActivityResultLauncher<Intent> =
+        registerForActivityResult(StartActivityForResult()) {
 
-            if (requestCode == RC_SIGN_IN) {
-                val task = GoogleSignIn.getSignedInAccountFromIntent(data)
-                val account = task.getResult(ApiException::class.java)
-
-                if (task != null && account != null) {
-                    callProfile()
-                }
-            }
+        if (it.resultCode == Activity.RESULT_OK) {
+            callProfile()
         }
     }
-
-    private fun callProfile() {
-        startActivity(Intent(this, UserProfileActivity::class.java))
-    }
-
-    private fun autenticar() {
-        val siginIntent = siginClient.signInIntent
-        startActivityForResult(siginIntent, RC_SIGN_IN)
-    }
-
-//    private var resultConnect: ActivityResultLauncher<Intent> =
-//        registerForActivityResult(StartActivityForResult()) { result ->
-//
-//        if (result.resultCode == Activity.RESULT_OK) {
-//
-//            //if (result.requestCode == RC_SIGN_IN) {
-//                val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
-//                val account = task.getResult(ApiException::class.java)
-//                callProfile(account)
-//            //}
-//        }
-//    }
 }

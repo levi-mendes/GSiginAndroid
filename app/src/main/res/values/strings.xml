@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">GoogleSiginSample</string>
+    <string name="msg_signedout">Signed out successfully !!!</string>
 </resources>

@@ -38,7 +38,7 @@ class UserProfileActivity : AppCompatActivity() {
             .signOut()
             .addOnCompleteListener {
                 finish()
-                makeText(this@UserProfileActivity, "Signed out successfully !!!", LENGTH_SHORT).show()
+                makeText(this@UserProfileActivity, R.string.msg_signedout, LENGTH_SHORT).show()
             }
     }
 }
