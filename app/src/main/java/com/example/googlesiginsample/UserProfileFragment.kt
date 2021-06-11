@@ -12,6 +12,14 @@ import com.squareup.picasso.Picasso
 
 class UserProfileFragment : BaseFragment() {
 
+    /*
+    TODO
+
+     - criar viewmodel e receber  GoogleSignIn ou repositorio
+     - carregar os campos atraves do databinging usando um objeto do viewmodel
+     - criar testes unitatios e integracao / aceitacao
+     */
+
     private var binding: FragmentUserProfileBinding? = null
 
     override fun onCreateView(
