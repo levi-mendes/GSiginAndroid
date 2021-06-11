@@ -32,7 +32,6 @@ class UserProfileActivity : AppCompatActivity() {
 
     private fun siginout() {
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestEmail()
             .build()
 
         GoogleSignIn.getClient(this, gso)

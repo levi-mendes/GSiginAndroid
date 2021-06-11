@@ -11,18 +11,19 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.SignInButton
 import com.google.android.gms.common.api.ApiException
 
-private const val RC_SIGN_IN: Int = 10
-
 class MainActivity : AppCompatActivity() {
 
     private lateinit var siginClient: GoogleSignInClient
     private lateinit var binding: ActivityMainBinding
 
+    companion object {
+        private const val RC_SIGN_IN: Int = 10
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
 
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestEmail()
@@ -64,6 +65,15 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun callProfile() {
+        startActivity(Intent(this, UserProfileActivity::class.java))
+    }
+
+    private fun autenticar() {
+        val siginIntent = siginClient.signInIntent
+        startActivityForResult(siginIntent, RC_SIGN_IN)
+    }
+
 //    private var resultConnect: ActivityResultLauncher<Intent> =
 //        registerForActivityResult(StartActivityForResult()) { result ->
 //
@@ -76,13 +86,4 @@ class MainActivity : AppCompatActivity() {
 //            //}
 //        }
 //    }
-
-    private fun callProfile() {
-        startActivity(Intent(this, UserProfileActivity::class.java))
-    }
-
-    private fun autenticar() {
-        val siginIntent = siginClient.signInIntent
-        startActivityForResult(siginIntent, RC_SIGN_IN)
-    }
 }
