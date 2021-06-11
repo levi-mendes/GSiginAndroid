@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
 
         val account = GoogleSignIn.getLastSignedInAccount(this)
 
-        if (account != null) {
+        account?.let {
             callProfile()
         }
     }
