@@ -62,9 +62,7 @@ class SiginFragment : BaseFragment() {
         }
     }
 
-    private fun callProfile(){
-        findNavController().navigate(R.id.userProfileFragment)
-    }
+    private fun callProfile() = findNavController().navigate(R.id.userProfileFragment)
 
     private val siginResultConnect: ActivityResultLauncher<Intent> =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {

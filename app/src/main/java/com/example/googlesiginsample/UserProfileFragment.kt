@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.navigation.fragment.findNavController
 import com.example.googlesiginsample.databinding.FragmentUserProfileBinding
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -15,9 +15,7 @@ class UserProfileFragment : BaseFragment() {
     private var binding: FragmentUserProfileBinding? = null
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentUserProfileBinding.inflate(layoutInflater, container, false)
         return binding?.root
     }
@@ -49,12 +47,8 @@ class UserProfileFragment : BaseFragment() {
         GoogleSignIn.getClient(requireActivity(), gso)
             .signOut()
             .addOnCompleteListener {
-                requireActivity().finish()
-                Toast.makeText(
-                    requireContext(),
-                    getString(R.string.msg_signedout),
-                    Toast.LENGTH_SHORT
-                ).show()
+                findNavController().popBackStack()
+                showToast(getString(R.string.msg_signedout))
             }
     }
 }
